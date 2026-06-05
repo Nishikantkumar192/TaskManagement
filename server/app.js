@@ -8,8 +8,12 @@ const port=8080;
 const app=express();
 const cookieParser=require("cookie-parser");
 const ExpressError = require("./utils/ExpressError.js");
+const cors=require("cors");
+const allowedOrigin="http://localhost:5173"
+app.use(cors({origin:allowedOrigin,credentials:true}));
 app.use(cookieParser());
 app.use(express.json());
+
 
 const dbUrl=process.env.MONGODB_URL;
 main().then(()=>{
