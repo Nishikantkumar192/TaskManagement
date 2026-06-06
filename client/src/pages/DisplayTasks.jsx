@@ -19,7 +19,7 @@ const DisplayTasks = ({task}) => {
     });
   };
   return (
-    <div className='flex flex-col justify-between text-xl flex-wrap shadow-[0_0_5px_4px_rgba(0,0,0)] hover:scale-105 hover:bg-pink-500 transition-transform duration-500 p-8'>
+    <div className='flex flex-col text-xl flex-wrap shadow-[0_0_5px_4px_rgba(0,0,0)] hover:scale-105 hover:bg-pink-500 transition-transform duration-500 p-8'>
         <span className='mt-2 '>Task : {task.task}</span> 
         <span className='mt-2 '>CreatedAt : {formatDate(task.createdAt)}</span>
         <span className='mt-2'>Status : {task.taskStatus}</span>

@@ -1,14 +1,25 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-const dataSchema=new mongoose.Schema({
-    task:{
-        type:String,
-        required:true,
+const dataSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    taskStatus:{
-        type:String,
-        default:"Pending"
-    }
-},{timestamps:true});
-const data=mongoose.model("data",dataSchema);
-module.exports=data;
+    description: {
+      type: String,
+      required: true,
+    },
+    taskStatus: {
+      type: String,
+      default: "Pending",
+    },
+    relatedUser: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
+const data = mongoose.model("data", dataSchema);
+module.exports = data;

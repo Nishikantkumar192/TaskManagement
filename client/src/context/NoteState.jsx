@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 const NoteState = (props) => {
   const [tasks, setTasks] = useState([]);
+  const [show,setShow]=useState(false);         //   login/signup form page visibility
   const fetchingTask = async (req, res) => {
     try {
       const { data } = await api.get("/api/data/fetchingTask");
@@ -38,6 +39,7 @@ const NoteState = (props) => {
     fetchingTask,
     addNewTask,
     handleStatus,
+    show,setShow
   };
   return (
     <div>

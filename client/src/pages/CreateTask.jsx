@@ -18,9 +18,7 @@ const CreateTask = () => {
       onSubmit={handleSubmit}
     >
       <textarea
-        className="border p-4 outline-none"
-        rows={4}
-        cols={40}
+        className="border p-4 outline-none max-h-50 w-full max-w-[500px]"
         name="task"
         placeholder="What's Your Task"
         onChange={(e)=>setTask(e.target.value)}
