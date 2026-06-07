@@ -1,0 +1,16 @@
+@media (max-width : 600px) {
+    #home{
+        display: none;
+    }
+    #log-in{
+        display: none;
+    }
+}
+@media (min-width:600px) {
+    #hamburger{
+        display: none;
+    }
+    #sideBar{
+        display: none;
+    }
+}

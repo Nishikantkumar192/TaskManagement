@@ -13,7 +13,7 @@ const FetchTasks = () => {
         fetchingTask();
     },[])
   return (
-    <div className='bg-gray-400'>
+    <div className='bg-gray-400 pt-16'>
     <CreateTask/>
     <div className='flex justify-center flex-wrap p-4 min-h-screen gap-7'>
       {tasks.map((task)=>{
