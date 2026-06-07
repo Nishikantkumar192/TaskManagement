@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdDangerous } from "react-icons/md";
 import { useState } from "react";
+import NoteContext from "../context/NoteContext";
 
 const LoginForm = ({ show, setShow }) => {
+  const context=useContext(NoteContext);
+  const {registerUser}=context;
   const [work, setWork] = useState("Sign-up");
   const [isPass,setPass]=useState("password");
   const [status,setStatus]=useState("Show");
+  const initialDetail={
+    username:"",
+    email:"",
+    password:"",
+  }
+  const [details,setDetails]=useState(initialDetail);
+  const handleChange=(e)=>{
+    setDetails({
+      ...details,
+      [e.target.name]:e.target.value
+    })
+  }
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    registerUser(details);
+  }
   const handlePasswordVisibility=()=>{
     if(isPass==="password") {
       setStatus("Hide");
@@ -18,7 +37,7 @@ const LoginForm = ({ show, setShow }) => {
   }
   const navigate = useNavigate();
   return (
-    <form className="bg-black w-full min-w-[310px] py-8 px-8 rounded">
+    <form className="bg-black w-full min-w-[310px] py-8 px-8 rounded" onSubmit={handleSubmit}>
       <span
         className="text-white text-2xl hover:text-red-800 cursor-pointer fixed right-4 top-5"
         onClick={() => {
@@ -33,6 +52,8 @@ const LoginForm = ({ show, setShow }) => {
           type="text"
           name="username"
           placeholder="Username"
+          onChange={handleChange}
+          value={details.username}
         />
       )}
       <input
@@ -40,6 +61,8 @@ const LoginForm = ({ show, setShow }) => {
         type="email"
         name="email"
         placeholder="Email"
+        onChange={handleChange}
+        value={details.email}
       />
       <div className="flex items-center">
       <input
@@ -47,6 +70,8 @@ const LoginForm = ({ show, setShow }) => {
         type={`${isPass}`}
         name="password"
         placeholder="Password"
+        onChange={handleChange}
+        value={details.password}
       />
       <span className="text-white px-2 mt-4 cursor-pointer" onClick={()=>handlePasswordVisibility()}>{status}</span></div>
       <button className="mt-4 mb-4 bg-green-800 hover:bg-green-700 cursor-pointer w-full p-2 text-2xl">

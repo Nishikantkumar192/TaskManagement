@@ -34,12 +34,22 @@ const NoteState = (props) => {
       toast.error(err.response?.data?.message || err.message);
     }
   };
+
+  const registerUser=async(details)=>{
+    try{
+      const {data}=await api.post("/api/auth/register",{details});
+      console.log(data);
+    }catch(err){
+      console.log(err.response?.data?.message || err.message);
+    }
+  }
   const values = {
     tasks,
     fetchingTask,
     addNewTask,
     handleStatus,
-    show,setShow
+    show,setShow,
+    registerUser
   };
   return (
     <div>

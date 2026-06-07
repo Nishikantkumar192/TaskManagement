@@ -12,6 +12,7 @@ const FetchTasks = () => {
     useEffect(()=>{
         fetchingTask();
     },[])
+
   return (
     <div className='bg-gray-400 pt-16'>
     <CreateTask/>
