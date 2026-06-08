@@ -9,6 +9,7 @@ const NoteState = (props) => {
   const [user,setUser]=useState(null);
   const [tasks, setTasks] = useState([]);     
   const [show,setShow]=useState(false);         //   login/signup form page visibility
+  const [filterTask,setFilterTask]=useState([]);
 
   const isValid=async(req,res)=>{
     try{
@@ -43,6 +44,7 @@ const NoteState = (props) => {
       const { data } = await api.get(`/api/data/handleStatus/${id}`);
       toast.success(data.message);
       setTasks(tasks.map((task) => (task._id === id ? data.task : task)));
+      setFilterTask(tasks.map((task) => (task._id === id ? data.task : task)));
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
@@ -81,7 +83,8 @@ const NoteState = (props) => {
     show,setShow,
     registerUser,
     user,setUser,
-    editTask,deleteTask
+    editTask,deleteTask,
+    filterTask,setFilterTask
   };
   return (
     <div>

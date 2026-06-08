@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import api from '../api/axios'
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import DisplayTasks from './DisplayTasks';
+import NoteContext from '../context/NoteContext';
 
 const FilterTask = () => {
+    const context=useContext(NoteContext);
+    const {filterTask,setFilterTask}=context;
     const location=useLocation();
     const query=new URLSearchParams(location.search).get("search");
-    const [filterTask,setFilterTask]=useState([]);
     useEffect(()=>{
         searchTask();
     },[]);
