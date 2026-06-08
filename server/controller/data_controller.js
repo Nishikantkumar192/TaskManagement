@@ -1,15 +1,20 @@
 const Data=require("../models/dataSchema.js");
 const ExpressError = require("../utils/ExpressError.js");
+const mongoose=require("mongoose");
 module.exports.fetchTask=async(req,res,next)=>{
-    const fetchedData=await Data.find();
-    if(!fetchedData) return next(new ExpressError(400,"Their is no Task remains or created!"));
+    const {userId}=req.user;
+    const fetchedData=await Data.find({relatedUser:new mongoose.Types.ObjectId(userId)});
+    if(!fetchedData) return next(new ExpressError(400,"Task is Empty!"));
     return res.json({success:true,fetchedData});
 }
 module.exports.createTask=async(req,res,next)=>{
-    const {task}=req.body;
-    if(!task) return next(new ExpressError(400,"Task is required"));
+    const {userId}=req.user;
+    const {title,description}=req.body;
+    if(!title || !description) return next(new ExpressError(401,"Field is missing"));
     const newTask=await Data.create({
-        task,
+        title,
+        description,
+        relatedUser:new mongoose.Types.ObjectId(userId),
     })
     return res.json({success:true,message:"Task added successfully",newTask});
 }
@@ -41,4 +46,16 @@ module.exports.handleStatus=async(req,res)=>{
     else task.taskStatus="Pending";
     await task.save();
     return res.json({success:true,message:"Status changed",task});
+}
+module.exports.filterTask=async(req,res,next)=>{
+    const {search}=req.query;
+    if(!search?.trim()) return next(new ExpressError(400,"search is required"));
+    const matchedTask=await Data.find({
+        $or:[
+            {title:{$regex:search,$options:"i"}},
+            {description:{$regex:search,$options:"i"}},
+            {taskStatus:{$regex:search,$options:"i"}},
+    ]})
+    if(!matchedTask) return next(new ExpressError(400,"Seach not found"));
+    return res.json({success:true,matchedTask});
 }

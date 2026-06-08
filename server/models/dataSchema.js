@@ -15,7 +15,8 @@ const dataSchema = new mongoose.Schema(
       default: "Pending",
     },
     relatedUser: {
-      type: String,
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"user",
       required: true,
     },
   },

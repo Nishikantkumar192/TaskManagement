@@ -6,7 +6,7 @@ import NoteContext from "../context/NoteContext";
 
 const LoginForm = ({ show, setShow }) => {
   const context=useContext(NoteContext);
-  const {registerUser}=context;
+  const {registerUser,setUser}=context;
   const [work, setWork] = useState("Sign-up");
   const [isPass,setPass]=useState("password");
   const [status,setStatus]=useState("Show");
@@ -24,7 +24,18 @@ const LoginForm = ({ show, setShow }) => {
   }
   const handleSubmit=(e)=>{
     e.preventDefault();
-    registerUser(details);
+    if(work==="Sign-up"){
+      registerUser("/api/auth/register",details);
+      setUser("Log-in");
+    }else{
+      const payload={
+        email:details.email,
+        password:details.password
+      }
+      setUser("Sign-up");
+      registerUser("/api/auth/log-in",payload);
+    }
+    setDetails(initialDetail);
   }
   const handlePasswordVisibility=()=>{
     if(isPass==="password") {
@@ -75,9 +86,9 @@ const LoginForm = ({ show, setShow }) => {
       />
       <span className="text-white px-2 mt-4 cursor-pointer" onClick={()=>handlePasswordVisibility()}>{status}</span></div>
       <button className="mt-4 mb-4 bg-green-800 hover:bg-green-700 cursor-pointer w-full p-2 text-2xl">
-        {work === "Sign-up" ? "Log-in" : "Sign-up"}
+        {work}
       </button>
-      {work === "Sign-up" ? (
+      {work !== "Sign-up" ? (
         <span className="text-white text-2xl inline">Create an account : </span>
       ) : (
         <span className="text-white text-2xl inline">
@@ -86,9 +97,9 @@ const LoginForm = ({ show, setShow }) => {
       )}
       <span
         className="text-blue-500 underline cursor-pointer text-2xl"
-        onClick={() => setWork(work === "Sign-up" ? "Log-in" : "Sign-up")}
+        onClick={() => {setWork(work === "Sign-up" ? "Log-in" : "Sign-up"),setDetails(initialDetail)}}
       >
-        {work}
+        {work==="Sign-up"?"log-in":"Sign-up"}
       </span>
     </form>
   );
