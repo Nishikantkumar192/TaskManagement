@@ -4,8 +4,11 @@ import { useState } from "react";
 import api from "../api/axios";
 import NoteContext from "./NoteContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const NoteState = (props) => {
+  const navigate=useNavigate();
+  const [userDetail,setUserDetail]=useState(null);         // store the infomation of registered user.
   const [user,setUser]=useState(null);
   const [tasks, setTasks] = useState([]);     
   const [show,setShow]=useState(false);         //   login/signup form page visibility
@@ -14,7 +17,7 @@ const NoteState = (props) => {
   const isValid=async(req,res)=>{
     try{
       const {data}=await api.get("/api/auth/isLoggedIn");
-      setUser(data.userInfo)
+      setUserDetail(data.userInfo)
     }catch(err){
       toast.error(err.response?.data?.message || err.message);
     }
@@ -41,7 +44,7 @@ const NoteState = (props) => {
   };
   const handleStatus = async (id) => {
     try {
-      const { data } = await api.get(`/api/data/handleStatus/${id}`);
+      const { data } = await api.post(`/api/data/handleStatus/${id}`);
       toast.success(data.message);
       setTasks(tasks.map((task) => (task._id === id ? data.task : task)));
       setFilterTask(tasks.map((task) => (task._id === id ? data.task : task)));
@@ -54,14 +57,25 @@ const NoteState = (props) => {
     try{
       const {data}=await api.post(`${url}`,details);
       toast.success(data.message);
+      setUserDetail(data.user);
     }catch(err){
       toast.error(err.response?.data?.message || err.message);
     }
   }
-  const editTask=async(req,res)=>{
+    const logoutUser = async () => {
+    try {
+      const { data } = await api.get("/api/auth/logout");
+      setUserDetail(null);
+      navigate("/");
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
+  const editTask=async(task)=>{
     try{
-      const {data}=await api.put("/api/data/updateTask");
-      console.log(data);
+      const {data}=await api.put(`/api/data/updateTask/${task._id}`,task);
+      toast.success(data.message);
     }catch(err){
       toast.error(err.response?.data?.message || err.message);
     }
@@ -84,7 +98,9 @@ const NoteState = (props) => {
     registerUser,
     user,setUser,
     editTask,deleteTask,
-    filterTask,setFilterTask
+    filterTask,setFilterTask,
+    userDetail,setUserDetail,
+    logoutUser,
   };
   return (
     <div>

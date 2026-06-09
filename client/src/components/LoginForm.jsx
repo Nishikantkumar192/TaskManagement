@@ -5,6 +5,7 @@ import { useState } from "react";
 import NoteContext from "../context/NoteContext";
 
 const LoginForm = ({ show, setShow }) => {
+  const navigate = useNavigate();
   const context=useContext(NoteContext);
   const {registerUser,setUser}=context;
   const [work, setWork] = useState("Sign-up");
@@ -36,6 +37,7 @@ const LoginForm = ({ show, setShow }) => {
       registerUser("/api/auth/log-in",payload);
     }
     setDetails(initialDetail);
+    setShow(!show);
   }
   const handlePasswordVisibility=()=>{
     if(isPass==="password") {
@@ -46,7 +48,6 @@ const LoginForm = ({ show, setShow }) => {
       setPass("password");
     };
   }
-  const navigate = useNavigate();
   return (
     <form className="bg-black w-full min-w-[310px] py-8 px-8 rounded" onSubmit={handleSubmit}>
       <span

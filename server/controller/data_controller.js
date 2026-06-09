@@ -25,23 +25,30 @@ module.exports.fetchUpdatingTask=async(req,res)=>{
     return res.json({success:true,task});
 }
 module.exports.updateTask=async(req,res,next)=>{
+    const {userId}=req.user;
     const {id}=req.params;
     const task=await Data.findById(id);
     if(!task) return next(new ExpressError(404,"Page not found"));
+    if(task.relatedUser.toString()!==userId) return next(new ExpressError(403,"Permission denied"));
     const updatedTask=Object.assign(task,req.body);
     await updatedTask.save();
-    return res.json({success:true,message:"Updated successfully",updatedTask});
+    return res.json({success:true,message:"Updated successfully"});
 }
 module.exports.deleteTask=async(req,res,next)=>{
+    const {userId}=req.user;
     const {id}=req.params;
+    const task=await Data.findById(id);
+    if(!task) return next(new ExpressError(404,"Task not present"));
+    if(task.relatedUser.toString()!==userId) return next(new ExpressError(403,"permission denied"));
     const deletedTask=await Data.findByIdAndDelete(id);
-    if(!deletedTask) return next(new ExpressError(404,"Task doesn't exist"));
     return res.json({success:true,message:"Deleted successfully",deletedTask});
 }
-module.exports.handleStatus=async(req,res)=>{
+module.exports.handleStatus=async(req,res,next)=>{
+    const {userId}=req.user;
     const {id}=req.params;
     const task=await Data.findById(id);
     if(!task) return next(new ExpressError(400,"Task not found"));
+    if(task.relatedUser.toString()!==userId) return next(new ExpressError(403,"Permission denied"));
     if(task.taskStatus==="Pending") task.taskStatus="Completed";
     else task.taskStatus="Pending";
     await task.save();

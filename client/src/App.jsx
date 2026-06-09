@@ -16,6 +16,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="/tasks" element={<FetchTasks/>}/>
+        <Route exact path="/create-task" element={<CreateTask/>}/>
         <Route exact path="/editTask/:id" element={<CreateTask/>}/>
         <Route exact path="/filterTask" element={<FilterTask/>}/>
       </Routes>

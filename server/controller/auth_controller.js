@@ -25,6 +25,7 @@ module.exports.registerUser=async(req,res,next)=>{
 }
 module.exports.login=async(req,res,next)=>{
     const {email,password}=req.body;
+    if(!email || !password) return next(new ExpressError(401,"Details are missing"));
     const user=await User.findOne({email});
     if(!user) return next(new ExpressError(403,"Invalid credentials email"));
     const isMatched=await bcrypt.compare(password,user.password);

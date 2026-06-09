@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import NoteContext from "../context/NoteContext";
+import "../style/styles.css"
 
 const DisplayTasks = ({ task }) => {
   const context = useContext(NoteContext);
@@ -24,6 +25,7 @@ const DisplayTasks = ({ task }) => {
       <span className="mt-2 ">Title : {task.title}</span>
       <span className="mt-2 break-all">Description : {task.description}</span>
       <span className="mt-2 ">CreatedAt : {formatDate(task.createdAt)}</span>
+      <span className="mt-2 ">UreatedAt : {formatDate(task.updatedAt)}</span>
       <span className="mt-2">Status : {task.taskStatus}</span>
       <span
         onClick={() => handleStatus(task._id)}
@@ -31,7 +33,7 @@ const DisplayTasks = ({ task }) => {
       >
         Change-status
       </span>
-      <div className="flex flex-wrap justify-between mt-4">
+      <div id="btns" className="flex flex-wrap justify-between mt-4">
         <Link
           className="shadow-[0_3px_2px_2px_rgba(0,0,0)] px-4"
           to={`/editTask/${task._id}`}

@@ -19,11 +19,16 @@ const FetchTasks = () => {
     if(!search) return;
     navigate(`/filterTask?search=${encodeURIComponent(search)}`);
   }
+  if(tasks.length===0){
+    return(
+      <div className="bg-black p-8 min-h-screen flex justify-center items-center">
+        <p className="text-4xl text-white ">Empty Task</p>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-gray-400 pt-16">
-      <CreateTask />
-      <hr />
       <div className="text-center mt-6 mb-5">
         <input
           className="border outline-none p-3 rounded-lg bg-white"

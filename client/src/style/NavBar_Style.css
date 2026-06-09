@@ -1,11 +1,5 @@
 @media (max-width : 600px) {
-    #home{
-        display: none;
-    }
-    #log-in{
-        display: none;
-    }
-    #logout{
+    .nav-options{
         display: none;
     }
 }
