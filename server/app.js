@@ -11,7 +11,8 @@ const cookieParser=require("cookie-parser");
 const ExpressError = require("./utils/ExpressError.js");
 const cookie=require("cookie");
 const cors=require("cors");
-const allowedOrigin="https://task-management-tawny-tau.vercel.app/"
+// const allowedOrigin="https://task-management-tawny-tau.vercel.app/"
+const allowedOrigin="http://localhost:5173"
 app.use(cors({origin:allowedOrigin,credentials:true}));
 app.use(cookieParser());
 app.use(express.json());
@@ -29,7 +30,9 @@ async function main() {
 app.listen(port,(req,res)=>{
     console.log(`app is listening through port: ${port}`);
 })
-
+app.use("/",(req,res)=>{
+    res.send("Backend Working");
+})
 app.use("/api/data",dataRouter);
 app.use("/api/auth",authRouter);
 
