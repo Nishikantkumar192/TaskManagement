@@ -29,12 +29,13 @@ async function main() {
 app.listen(port,(req,res)=>{
     console.log(`app is listening through port: ${port}`);
 })
-app.use("/",(req,res)=>{
-    res.send("Backend Working");
-})
+
 app.use("/api/data",dataRouter);
 app.use("/api/auth",authRouter);
 
+app.get("/",(req,res)=>{
+    res.send("Backend Working");
+})
 app.use((req,res,next)=>{
     return next(new ExpressError(404,"Page not found"));
 })
