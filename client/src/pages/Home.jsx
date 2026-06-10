@@ -9,7 +9,7 @@ const Home = () => {
   const context=useContext(NoteContext);
   const {show,setShow,userDetail}=context;
   return (
-    <div className="flex justify-center items-center bg-gray-400 min-h-screen">
+    <div className="flex flex-col justify-center items-center bg-gray-400 min-h-screen">
       {show && <div className="z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px]">
         <LoginForm show={show} setShow={setShow}/>
       </div>}

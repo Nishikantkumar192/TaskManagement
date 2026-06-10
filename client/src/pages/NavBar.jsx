@@ -32,12 +32,12 @@ const NavBar = () => {
         >
           Home
         </Link>
-        <Link
+        {userDetail && <Link
           className="px-4 text-white text-2xl nav-options"
           to={"/create-task"}
         >
           Create-Task
-        </Link>{" "}
+        </Link>}
         {!userDetail ? (
           <button
             className="px-4 text-white text-2xl nav-options"
