@@ -11,7 +11,7 @@ const cookieParser=require("cookie-parser");
 const ExpressError = require("./utils/ExpressError.js");
 const cookie=require("cookie");
 const cors=require("cors");
-const allowedOrigin="http://localhost:5173"
+const allowedOrigin="https://task-management-tawny-tau.vercel.app/"
 app.use(cors({origin:allowedOrigin,credentials:true}));
 app.use(cookieParser());
 app.use(express.json());
