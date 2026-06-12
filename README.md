@@ -194,15 +194,6 @@ npm run both
 
 ---
 
-## Screenshots
-
-### Login Page
-
-### Dashboard
-
-### Task Management
-
----
 
 ## Video Demonstration
 

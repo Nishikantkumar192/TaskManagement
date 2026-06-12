@@ -2,6 +2,7 @@ const Data=require("../models/dataSchema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const mongoose=require("mongoose");
 const { wrapAsync } = require("../utils/wrapAsync.js");
+
 module.exports.fetchTask=wrapAsync(async(req,res,next)=>{
     const {userId}=req.user;
     const fetchedData=await Data.find({relatedUser:new mongoose.Types.ObjectId(userId)});
